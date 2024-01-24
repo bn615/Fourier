@@ -61,6 +61,9 @@ class Complex {
   }
 }
 
+// in the form c * e ^ (theta * i)
+// c is a constant
+// theta is also a constant
 
 class Polar {
     constructor(c, theta) {
@@ -68,6 +71,7 @@ class Polar {
       this.theta = theta;
     }
   
+    //multiplying c1 * e^(t1*i) * c2 * e^(t2*i) = c1*c2 * e^((t2 + t1) *i)
     multiply(pt) {
       return new Polar(this.c * pt.c, this.theta + pt.theta);
     }
@@ -80,6 +84,7 @@ class Polar {
       return this.c === pt.c && this.theta === pt.theta;
     }
   
+    // rotates pt about the origin counterclockwise by theta radians
     static rotate(pt, theta) {
       return new Polar(pt.c, pt.theta + theta);
     }
@@ -88,6 +93,7 @@ class Polar {
       console.log(`(${pt.c}, ${pt.theta})`);
     }
   
+    // converts to rectangular coords
     static convertToRectangular(pt) {
       const x = pt.c * Math.cos(pt.theta);
       const y = pt.c * Math.sin(pt.theta);
@@ -102,37 +108,29 @@ class Polar {
     // }
 }
 
+
 class ComplexFourierSeries {
-  constructor(coefficients) {
-      this.coefficients = coefficients;
+  constructor(termsdf) {
+      this.termsdf = termsdf;
   }
 
-  evaluate(t, terms = this.coefficients.length) {
+  extract(i){
+    const extractedRow = termsdf.filter(row => row.get(String(i)) !== undefined).toArray()[0];
+    const frequency = parseInt(Object.keys(extractedRow)[0]);
+    const constant = extractedRow[frequency][0];
+    return Polar(constant, frequency * 2 * PI);
+  }
+
+
+  evaluate(t) {
       let result = new Complex(0, 0);
 
-      for (let k = 0; k < terms; k++) {
-        const coefficient = this.coefficients[k];
-        const term = Polar.convertToRectangular(Polar.rotate(coefficient, t));
+      for (let k = -(termsdf.count() - 1) / 2; k < (termsdf.count() + 1) / 2; k++) {
+        const polarTerm = termsdf.extract(i);
+        const term = Polar.convertToRectangular(Polar(polarTerm.c, polarTerm.theta * t));
         result = result.add(term);
       }
       
-      return Complex.convertToPolar(result);
+      return result;
   }
 }
-
-// // Example usage:
-// const coefficients = [
-//   new Polar(1, Math.PI),
-//   new Polar(0.5, Math.PI / 2),
-//   new Polar(0.25, Math.PI),
-//   // Add more coefficients as needed
-// ];
-
-
-
-// const fourierSeries = new ComplexFourierSeries(coefficients);
-
-// // Evaluate the Fourier series at t = 0.1 with the first 3 terms
-// const result = fourierSeries.evaluate(0.1);
-
-// Polar.print(result);

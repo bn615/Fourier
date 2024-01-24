@@ -1,66 +1,48 @@
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById('fourierCanvas');
 const ctx = canvas.getContext('2d');
-const path = [];
-let isDrawing = false;
 
-canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stopDrawing);
+// Sample Fourier Series Terms
+const termsData = [
+  { '1': [1, 0] },
+  { '2': [0.5, Math.PI / 2] },
+  // Add more terms as needed
+];
 
-function startDrawing(e) {
-  isDrawing = true;
-  path.length = 0;
-  clearCanvas();
-  const startPoint = getMousePosition(e);
-  path.push(startPoint);
-}
+const termsdf = new DataFrame(termsData);
+const fourierSeries = new ComplexFourierSeries(termsdf);
 
-function draw(e) {
-  if (!isDrawing) return;
+// Animation Parameters
+const totalTime = 2 * Math.PI;
+const numFrames = 60;
+const frameDuration = totalTime / numFrames;
+let currentFrame = 0;
 
-  const currentPoint = getMousePosition(e);
-  path.push(currentPoint);
-
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = '#000';
-  ctx.lineJoin = 'round';
-  ctx.lineCap = 'round';
-
-  ctx.beginPath();
-  ctx.moveTo(path[path.length - 2].x, path[path.length - 2].y);
-  ctx.lineTo(currentPoint.x, currentPoint.y);
-  ctx.stroke();
-  ctx.closePath();
-}
-
-function stopDrawing() {
-  isDrawing = false;
-
-  const numPoints = 100;
-  const smoothedPath = cubicSpline2(path, 1, numPoints);
-
+function animate() {
+  // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw the smoothed path
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = 'red';
-  ctx.lineJoin = 'round';
-  ctx.lineCap = 'round';
+  // Evaluate Fourier Series at current time
+  const t = currentFrame / numFrames;
+  const result = fourierSeries.evaluate(t);
 
+  // Convert result to Cartesian coordinates for drawing
+  const x = result.x * (canvas.width / 2) + canvas.width / 2;
+  const y = result.y * (canvas.height / 2) + canvas.height / 2;
+
+  // Draw a point at (x, y)
   ctx.beginPath();
-  ctx.moveTo(smoothedPath[0].x, smoothedPath[0].y);
-  for (let i = 1; i < smoothedPath.length; i++) {
-    ctx.lineTo(smoothedPath[i].x, smoothedPath[i].y);
+  ctx.arc(x, y, 3, 0, 2 * Math.PI);
+  ctx.fillStyle = '#000';
+  ctx.fill();
+
+  // Increment frame
+  currentFrame++;
+
+  // Repeat the animation
+  if (currentFrame < numFrames) {
+    requestAnimationFrame(animate);
   }
-  ctx.stroke();
-  ctx.closePath();
 }
 
-function getMousePosition(e) {
-  const rect = canvas.getBoundingClientRect();
-  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-}
-
-function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+// Start the animation
+animate();
