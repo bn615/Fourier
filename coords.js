@@ -4,12 +4,19 @@ class Complex {
     this.y = y;
   }
 
-  add(pt) {
-    return new Complex(this.x + pt.x, this.y + pt.y);
+  static add(pt1, pt2) {
+    return new Complex(pt1.x + pt2.x, pt1.y + pt2.y);
   }
 
-  subtract(pt) {
-    return new Complex(this.x - pt.x, this.y - pt.y);
+  static sum() {
+    var total = new Complex(0, 0);
+    for (let i = 0; i < arguments.length; i++) {
+      total = this.add(total, arguments[i]);
+    }
+    return total;
+  }
+  static subtract(pt1, pt2) {
+    return new Complex(pt1.x - pt2.x, pt1.y - pt2.y);
   }
 
   multiplyScalar(d) {
@@ -19,12 +26,21 @@ class Complex {
   divideScalar(d) {
     return new Complex(this.x / d, this.y / d);
   }
-  multiply(pt){
-    return new Complex(this.x * pt.x - this.y * pt.y, this.x * pt.y + this.y * pt.x)
+
+  static multiply(pt1, pt2){
+    return new Complex(pt1.x * pt2.x - pt1.y * pt2.y, pt1.x * pt2.y + pt1.y * pt2.x)
   }
 
-  equals(pt) {
-    return this.x === pt.x && this.y === pt.y;
+  static product(){
+    var prod = new Complex(0, 0);
+    for (let i = 0; i < arguments.length; i++){
+      prod = this.multiply(prod, arguments[i])
+    }
+    return prod;
+  }
+
+  static equals(pt1, pt2) {
+    return pt1.x === pt2.x && pt1.y === pt2.y;
   }
 
   static distance(pt1, pt2) {
@@ -72,16 +88,17 @@ class Polar {
     }
   
     //multiplying c1 * e^(t1*i) * c2 * e^(t2*i) = c1*c2 * e^((t2 + t1) *i)
-    multiply(pt) {
-      return new Polar(this.c * pt.c, this.theta + pt.theta);
+    static multiply(pt1, pt2) {
+      return new Polar(pt1.c * pt2.c, pt1.theta + pt2.theta);
     }
   
-    divide(pt) {
-    return new Polar(this.c / pt.c, this.theta - pt.theta);
+    // divides point 1 by point 2
+    static divide(pt1, pt2) {
+      return new Polar(this.c / pt2.c, pt1.theta - pt2.theta);
     }
   
-    equals(pt) {
-      return this.c === pt.c && this.theta === pt.theta;
+    static equals(pt) {
+      return pt1.c === pt2.c && pt1.theta === pt2.theta;
     }
   
     // rotates pt about the origin counterclockwise by theta radians
@@ -109,28 +126,10 @@ class Polar {
 }
 
 
-class ComplexFourierSeries {
-  constructor(termsdf) {
-      this.termsdf = termsdf;
-  }
-
-  extract(i){
-    const extractedRow = termsdf.filter(row => row.get(String(i)) !== undefined).toArray()[0];
-    const frequency = parseInt(Object.keys(extractedRow)[0]);
-    const constant = extractedRow[frequency][0];
-    return Polar(constant, frequency * 2 * PI);
+class complexFourierSeries {
+  constructor(frequency, cValues) {
+      this.terms = terms;
   }
 
 
-  evaluate(t) {
-      let result = new Complex(0, 0);
-
-      for (let k = -(termsdf.count() - 1) / 2; k < (termsdf.count() + 1) / 2; k++) {
-        const polarTerm = termsdf.extract(i);
-        const term = Polar.convertToRectangular(Polar(polarTerm.c, polarTerm.theta * t));
-        result = result.add(term);
-      }
-      
-      return result;
-  }
 }
