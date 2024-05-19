@@ -1,48 +1,30 @@
-const canvas = document.getElementById('fourierCanvas');
+const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
+let drawing = false;
 
-// Sample Fourier Series Terms
-const termsData = [
-  { '1': [1, 0] },
-  { '2': [0.5, Math.PI / 2] },
-  // Add more terms as needed
-];
-
-const termsdf = new DataFrame(termsData);
-const fourierSeries = new ComplexFourierSeries(termsdf);
-
-// Animation Parameters
-const totalTime = 2 * Math.PI;
-const numFrames = 60;
-const frameDuration = totalTime / numFrames;
-let currentFrame = 0;
-
-function animate() {
-  // Clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Evaluate Fourier Series at current time
-  const t = currentFrame / numFrames;
-  const result = fourierSeries.evaluate(t);
-
-  // Convert result to Cartesian coordinates for drawing
-  const x = result.x * (canvas.width / 2) + canvas.width / 2;
-  const y = result.y * (canvas.height / 2) + canvas.height / 2;
-
-  // Draw a point at (x, y)
-  ctx.beginPath();
-  ctx.arc(x, y, 3, 0, 2 * Math.PI);
-  ctx.fillStyle = '#000';
-  ctx.fill();
-
-  // Increment frame
-  currentFrame++;
-
-  // Repeat the animation
-  if (currentFrame < numFrames) {
-    requestAnimationFrame(animate);
-  }
+function startDrawing(e) {
+    drawing = true;
+    draw(e); // Start drawing immediately
 }
 
-// Start the animation
-animate();
+function stopDrawing() {
+    drawing = false;
+    ctx.beginPath(); // Reset the path to avoid connecting lines
+}
+
+function draw(e) {
+    if (!drawing) return;
+    
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'black';
+    
+    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+}
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mousemove', draw);
