@@ -32,7 +32,7 @@ class Complex {
   }
 
   static product(){
-    var prod = new Complex(0, 0);
+    var prod = new Complex(1, 0);
     for (let i = 0; i < arguments.length; i++){
       prod = this.multiply(prod, arguments[i])
     }
@@ -94,7 +94,7 @@ class Polar {
   
     // divides point 1 by point 2
     static divide(pt1, pt2) {
-      return new Polar(this.c / pt2.c, pt1.theta - pt2.theta);
+      return new Polar(pt1.c / pt2.c, pt1.theta - pt2.theta);
     }
   
     static equals(pt) {
