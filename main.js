@@ -100,7 +100,7 @@ async function vectorAnimation() {
   console.log("Starting animation");
 
   // subject to change
-  const everyNPoints = 5;
+  const everyNPoints = 1;
 
   let transform = fft(everyNPointsArray(everyNPoints));
   let N = transform.length;
@@ -168,7 +168,7 @@ async function vectorAnimation() {
     previousPoint = currentlyAt;
     */
 
-    await sleep(5 * everyNPoints);
+    await sleep(25 * everyNPoints);
   }
 
   console.log("Animation finished");
