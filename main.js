@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 let drawing = false;
 let drawn = false;
 let points = []; // Array to store the points
+let pointsCopy = [];
 
 function startDrawing(e) {
     if (!drawn) {
@@ -86,13 +87,35 @@ function fftshift(arr) {
         return arr.slice(halfN + 1).concat(arr.slice(0, halfN + 1));
     }
 }
+
+function drawFirstNPoints(n) {
+
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'black';
+
+    for (let i = 0; i < n; i++) {
+        let px = pointsCopy[i].x;
+        let py = pointsCopy[i].y;
+        ctx.lineTo(px, py);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+    }
+}
+
+
 async function vectorAnimation() {
   console.log("Starting animation");
 
   const everyNPoints = 1;
   let transform = fft(everyNPointsArray(everyNPoints));
   let N = transform.length;
-  clearCanvas();
+
+  pointsCopy = [];
+  for (let i = 0; i < points.length; i++) {
+    pointsCopy.push(points[i]);
+  }
 
   let currentlyAt = new Complex(0, 0);
 
@@ -120,6 +143,8 @@ async function vectorAnimation() {
 
           drawArrow(ctx, previousX, previousY, currentX, currentY);
       }
+
+      drawFirstNPoints(n);
 
       await sleep(25 * everyNPoints);
   }
