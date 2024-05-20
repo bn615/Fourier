@@ -5,7 +5,9 @@ let drawn = false;
 let points = []; // Array to store the points
 
 function startDrawing(e) {
+  
   if (!drawn) {
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     drawing = true;
     points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the starting point
     draw(e);
@@ -24,10 +26,7 @@ function clearCanvas() {
   drawing = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   points = [];
-  drawn = false;
-  drawing = false;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  points = [];
+  
 }
 
 function draw(e) {
@@ -40,7 +39,7 @@ function draw(e) {
     ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+ 
     
     points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the current point
 }
