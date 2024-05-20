@@ -8,7 +8,9 @@ function startDrawing(e) {
   
   if (!drawn) {
     if (points.length == 0){
+
       ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+      clearCanvas();
     }
     
     drawing = true;
