@@ -6,7 +6,7 @@ let points = []; // Array to store the points
 
 function startDrawing(e) {
   
-  if (!drawn) {
+  if (!drawn && !drawing) {
     ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     drawing = true;
     points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the starting point
