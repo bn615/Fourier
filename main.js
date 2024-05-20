@@ -4,12 +4,12 @@ let drawing = false;
 let drawn = false;
 let points = []; // Array to store the points
 let pointsCopy = [];
+let originalImage = null; // Store the original drawing as an image
 
 function startDrawing(e) {
     if (!drawn) {
         if (points.length == 0) {
             clearCanvas();
-            ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
         }
         drawing = true;
         points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the starting point
@@ -21,6 +21,8 @@ function stopDrawing() {
     drawing = false;
     ctx.beginPath();
     drawn = true;
+    // Save the current drawing as an image
+    originalImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
 
 function clearCanvas() {
@@ -28,6 +30,7 @@ function clearCanvas() {
     drawing = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     points = [];
+    originalImage = null; // Clear the saved image
 }
 
 function draw(e) {
@@ -88,6 +91,7 @@ function fftshift(arr) {
     }
 }
 
+<<<<<<< HEAD
 function drawFirstNPoints(n) {
 
     ctx.lineWidth = 5;
@@ -105,9 +109,13 @@ function drawFirstNPoints(n) {
 }
 
 
+=======
+// Vector animation function
+>>>>>>> fcf14b6363af93088a8e28f659657d5bdb0c5cdd
 async function vectorAnimation() {
-  console.log("Starting animation");
+    console.log("Starting animation");
 
+<<<<<<< HEAD
   const everyNPoints = 1;
   let transform = fft(everyNPointsArray(everyNPoints));
   let N = transform.length;
@@ -116,66 +124,75 @@ async function vectorAnimation() {
   for (let i = 0; i < points.length; i++) {
     pointsCopy.push(points[i]);
   }
+=======
+    const everyNPoints = 1;
+    let transform = fft(everyNPointsArray(everyNPoints));
+    let N = transform.length;
+>>>>>>> fcf14b6363af93088a8e28f659657d5bdb0c5cdd
 
-  let currentlyAt = new Complex(0, 0);
+    let currentlyAt = new Complex(0, 0);
 
-  for (let n = 0; n < N; n += 1) {
-      clearCanvas();
-      currentlyAt = new Complex(0, 0);
+    for (let n = 0; n < N; n += 1) {
+        ctx.putImageData(originalImage, 0, 0); // Redraw the original image
+        currentlyAt = new Complex(0, 0);
 
-      ctx.lineWidth = 1;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = 'red';
-      ctx.beginPath(); // Reset path at the beginning of each frame
+        ctx.lineWidth = 1;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'red';
+        ctx.beginPath(); // Reset path at the beginning of each frame
 
-      for (let k = 0; k < N; k++) {
-          let esec = Polar.convertToRectangular(new Polar(1 / N, 2 * Math.PI * k * n / N));
-          let Xk = transform[k];
-          let vector = Complex.product(Xk, esec);
+        for (let k = 0; k < N; k++) {
+            let esec = Polar.convertToRectangular(new Polar(1 / N, 2 * Math.PI * k * n / N));
+            let Xk = transform[k];
+            let vector = Complex.product(Xk, esec);
 
-          let previousX = currentlyAt.x;
-          let previousY = currentlyAt.y;
+            let previousX = currentlyAt.x;
+            let previousY = currentlyAt.y;
 
-          currentlyAt = Complex.add(currentlyAt, vector);
+            currentlyAt = Complex.add(currentlyAt, vector);
 
-          let currentX = currentlyAt.x;
-          let currentY = currentlyAt.y;
+            let currentX = currentlyAt.x;
+            let currentY = currentlyAt.y;
 
-          drawArrow(ctx, previousX, previousY, currentX, currentY);
-      }
+            drawArrow(ctx, previousX, previousY, currentX, currentY);
+        }
 
+<<<<<<< HEAD
       drawFirstNPoints(n);
 
       await sleep(25 * everyNPoints);
   }
+=======
+        await sleep(25 * everyNPoints);
+    }
+>>>>>>> fcf14b6363af93088a8e28f659657d5bdb0c5cdd
 
-  console.log("Animation finished");
+    console.log("Animation finished");
 }
 
 function drawArrow(ctx, fromX, fromY, toX, toY) {
-  const headLength = 10; // Length of the arrowhead
-  const angle = Math.atan2(toY - fromY, toX - fromX);
+    const headLength = 10; // Length of the arrowhead
+    const angle = Math.atan2(toY - fromY, toX - fromX);
 
-  // Draw the arrow line
-  ctx.beginPath();
-  ctx.moveTo(fromX, fromY);
-  ctx.lineTo(toX, toY);
-  ctx.stroke();
+    // Draw the arrow line
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.stroke();
 
-  // Draw the arrowhead
-  ctx.beginPath();
-  ctx.moveTo(toX, toY);
-  ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-  ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
-  ctx.lineTo(toX, toY);
-  ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-  ctx.stroke();
-  ctx.beginPath(); // Reset path after drawing each arrow
+    // Draw the arrowhead
+    ctx.beginPath();
+    ctx.moveTo(toX, toY);
+    ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+    ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
+    ctx.lineTo(toX, toY);
+    ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+    ctx.stroke();
+    ctx.beginPath(); // Reset path after drawing each arrow
 }
 
-
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Add a button to print points
