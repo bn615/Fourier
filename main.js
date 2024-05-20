@@ -24,6 +24,10 @@ function clearCanvas() {
   drawing = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   points = [];
+  drawn = false;
+  drawing = false;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  points = [];
 }
 
 function draw(e) {
