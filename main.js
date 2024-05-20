@@ -111,7 +111,7 @@ async function vectorAnimation() {
 
   let previosPoint = null;
 
-  for(let n = 1; n < N-1; n++){
+  for (let n = 0; n < N; n += 1) {
     clearCanvas();
 
     let currentlyAt = new Complex(0, 0);
