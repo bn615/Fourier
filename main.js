@@ -6,8 +6,11 @@ let points = []; // Array to store the points
 
 function startDrawing(e) {
   
-  if (!drawn && !drawing) {
-    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+  if (!drawn) {
+    if (points.length == 0){
+      ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    }
+    
     drawing = true;
     points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the starting point
     draw(e);
@@ -17,6 +20,7 @@ function startDrawing(e) {
 function stopDrawing() {
     drawing = false;
     ctx.beginPath();
+    
     // points.push(null); // Use null as a separator for different segments
     drawn = true;
 }
@@ -25,6 +29,7 @@ function clearCanvas() {
   drawn = false;
   drawing = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
   points = [];
   
 }
@@ -39,7 +44,7 @@ function draw(e) {
     ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     ctx.stroke();
     ctx.beginPath();
- 
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     
     points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the current point
 }
