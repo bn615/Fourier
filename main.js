@@ -55,13 +55,6 @@ canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mousemove', draw);
 
-
-
-
-
-
-
-
 // Return an array containing every n points
 function everyNPointsArray(everyNPoints) {
   let result = [];
@@ -118,7 +111,7 @@ async function vectorAnimation() {
 
   let previosPoint = null;
 
-  for (let n = 0; n < N; n += 1) {
+  for(let n = 1; n < N-1; n++){
     clearCanvas();
 
     let currentlyAt = new Complex(0, 0);
@@ -214,7 +207,6 @@ const printButton = document.createElement('button');
 printButton.innerText = 'Print Points';
 printButton.addEventListener('click', everyNPointsArray);
 document.body.appendChild(printButton);
-
 
 // Add a button to clear drawing
 const clearButton = document.createElement('button');
