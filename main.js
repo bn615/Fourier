@@ -96,7 +96,7 @@ function fftshift(arr) {
 // sum of X_k/N * e^(i2pikn/N)
 // the tiem variable is n
 async function vectorAnimation() {
-
+  clearCanvas();
   console.log("Starting animation");
 
   // subject to change
