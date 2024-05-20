@@ -24,6 +24,6 @@ function pathToBezier(path, k = 15){
     }
 
     bezPts.push(path[numPoints - 1]);
-
+ 
     return spline(bezPts);
 }
