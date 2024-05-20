@@ -151,12 +151,12 @@ async function vectorAnimation() {
       */
     }
 
-    ctx.strokeStyle = 'black';
+    // ctx.strokeStyle = 'black';
 
-    let currentX = currentlyAt.x;
-    let currentY = currentlyAt.y;
+    // let currentX = currentlyAt.x;
+    // let currentY = currentlyAt.y;
 
-    ctx.fillRect(currentX, currentY, 1, 1);
+    // ctx.fillRect(currentX, currentY, 1, 1);
 
     /*
     if (previousPoint !== null) {
