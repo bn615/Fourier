@@ -129,6 +129,9 @@ async function vectorAnimation() {
         ctx.putImageData(originalImage, 0, 0); // Redraw the original image
         currentlyAt = new Complex(0, 0);
 
+
+        drawFirstNPoints(n + 1);
+
         ctx.lineWidth = 1;
         ctx.lineCap = 'round';
         ctx.strokeStyle = 'red';
@@ -149,9 +152,6 @@ async function vectorAnimation() {
 
             drawArrow(ctx, previousX, previousY, currentX, currentY);
         }
-
-
-      drawFirstNPoints(n + 1);
 
       await sleep(25 * everyNPoints);
   }
