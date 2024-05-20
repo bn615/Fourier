@@ -12,6 +12,7 @@ function startDrawing(e) {
             clearCanvas();
         }
         drawing = true;
+        ctx.beginPath();
         points.push(new Complex(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)); // Add the starting point
         draw(e);
     }
@@ -91,12 +92,12 @@ function fftshift(arr) {
     }
 }
 
-<<<<<<< HEAD
 function drawFirstNPoints(n) {
 
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'blue';
+    ctx.beginPath();
 
     for (let i = 0; i < n; i++) {
         let px = pointsCopy[i].x;
@@ -109,13 +110,10 @@ function drawFirstNPoints(n) {
 }
 
 
-=======
 // Vector animation function
->>>>>>> fcf14b6363af93088a8e28f659657d5bdb0c5cdd
 async function vectorAnimation() {
     console.log("Starting animation");
 
-<<<<<<< HEAD
   const everyNPoints = 1;
   let transform = fft(everyNPointsArray(everyNPoints));
   let N = transform.length;
@@ -124,11 +122,6 @@ async function vectorAnimation() {
   for (let i = 0; i < points.length; i++) {
     pointsCopy.push(points[i]);
   }
-=======
-    const everyNPoints = 1;
-    let transform = fft(everyNPointsArray(everyNPoints));
-    let N = transform.length;
->>>>>>> fcf14b6363af93088a8e28f659657d5bdb0c5cdd
 
     let currentlyAt = new Complex(0, 0);
 
@@ -157,15 +150,11 @@ async function vectorAnimation() {
             drawArrow(ctx, previousX, previousY, currentX, currentY);
         }
 
-<<<<<<< HEAD
-      drawFirstNPoints(n);
+
+      drawFirstNPoints(n + 1);
 
       await sleep(25 * everyNPoints);
   }
-=======
-        await sleep(25 * everyNPoints);
-    }
->>>>>>> fcf14b6363af93088a8e28f659657d5bdb0c5cdd
 
     console.log("Animation finished");
 }
