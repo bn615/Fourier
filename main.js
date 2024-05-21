@@ -34,6 +34,10 @@ function clearCanvas() {
     originalImage = null; // Clear the saved image
 }
 
+function printPoints() {
+    logToConsole(spacedArray(3));
+}
+
 function draw(e) {
     if (!drawing) return;
 
@@ -138,17 +142,6 @@ function fft(inputArray) {
         result.push(sum);
     }
     return result;
-}
-
-function fftshift(arr) {
-    const n = arr.length;
-    const halfN = Math.floor(n / 2);
-
-    if (n % 2 === 0) {
-        return arr.slice(halfN).concat(arr.slice(0, halfN));
-    } else {
-        return arr.slice(halfN + 1).concat(arr.slice(0, halfN + 1));
-    }
 }
 
 function drawFirstNPoints(n) {
@@ -260,6 +253,6 @@ const clearButton = document.getElementById('clearButton');
 const vectorAnimationButton = document.getElementById('vectorAnimationButton');
 
 // Add event listeners to the buttons
-printButton.addEventListener('click', () => logToConsole(spacedArray(3)));
+printButton.addEventListener('click', printPoints);
 clearButton.addEventListener('click', clearCanvas);
 vectorAnimationButton.addEventListener('click', vectorAnimation);
