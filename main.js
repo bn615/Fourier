@@ -190,7 +190,7 @@ async function vectorAnimation() {
 
         ctx.lineWidth = .75;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = '#43a6c6';
+        ctx.strokeStyle = '#43a6cwg6';
         ctx.beginPath(); // Reset path at the beginning of each frame
 
         for (let k = 0; k < N; k++) {
@@ -205,7 +205,9 @@ async function vectorAnimation() {
 
             let currentX = currentlyAt.x;
             let currentY = currentlyAt.y;
-
+            if(k == 0){
+                continue;
+            }
             drawArrow(ctx, previousX, previousY, currentX, currentY);
         }
 
