@@ -73,18 +73,21 @@ function spacedArray(dist) {
     result.push(points[0])
 
     let lastPoint = points[0];
-    for(let i = 1; i < points.length - 1; i++) {
+    for(let i = 1; i < points.length; i++) {
         
         while (Complex.distance(lastPoint, points[i]) >= dist) {
             let t = dist / Complex.distance(lastPoint, points[i]);
             lastPoint = Complex.lerp(lastPoint, points[i], t);
             result.push(lastPoint)
         }
-        if(Complex.dist(points[i], lastPoint) > dist / 2) {
-            const dx = points[i + 1].x - points[i].x;
-            const dy = points[i + 1].y - points[i].y;
+        if(i != points.length - 1) {
+            const p1 = Complex.subtract(points[i + 1], lastPoint);
+            const p = Complex.subtract(points[i], lastPoint);
+
+            const dx = p1.x - p.x;
+            const dy = p1.y - p.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
-            const D = points[i].x * points[i + 1].y - points[i + 1].x * points[i].y;
+            const D = p.x * p1.y - p1.x * p.y;
 
             const x1 = (D * dy + sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
             const x2 = (D * dy - sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
@@ -92,21 +95,24 @@ function spacedArray(dist) {
             const y1 = (-1 * D * dx + Math.abs(dy)* Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
             const y2 = (-1 * D * dx - Math.abs(dy)* Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
 
-            const p1 = new Complex(x1, y1);
-            const p2 = new Complex(x2, y2);
+            const n1 = new Complex(x1, y1);
+            const n2 = new Complex(x2, y2);
             
-            const d1 = Complex.distance(p1, points[i + 1]);
-            const d2 = Complex.distance(p2, points[i + 1]);
+            const d1 = Complex.distance(n1, p1);
+            const d2 = Complex.distance(n2, p1);
+
             
             if (d1 > d2){
-                lastPoint = d2;
+
+                lastPoint = Complex.add(n2, lastPoint);
             }
             else{
-                lastPoint = d1;
+                lastPoint = Complex.add(n1, lastPoint);
             }
             result.push(lastPoint);
         }            
     }
+    result.push(points[points.length - 1]);
     return result;
 }
 
