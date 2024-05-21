@@ -91,7 +91,7 @@ function spacedArray(dist) {
 
             if(sign(Math.pow(dist * dr, 2) - D * D) != 1){
                 lastPoint = points[i];
-                result.push(lastPoint);
+                result.push(Complex.add(lastPoint, new Complex(0.5, 0.5)));
                 continue;
             }
 
@@ -218,9 +218,9 @@ async function vectorAnimation() {
       await sleep(15 * everyNPoints);
   }
 
-    // for(i = 0; i < points.length; i++){
-    //     logToConsole(String(points[i].x)+ ", " + String(points[i].y));
-    // }
+    for(i = 0; i < points.length; i++){
+        logToConsole(String(points[i].x)+ ", " + String(points[i].y));
+    }
     logToConsole("Animation finished");
 }
 
