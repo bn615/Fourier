@@ -227,15 +227,18 @@ function drawArrow(ctx, fromX, fromY, toX, toY) {
     ctx.moveTo(fromX, fromY);
     ctx.lineTo(toX, toY);
     ctx.stroke();
+    
+    let dist = Math.sqrt(Math.pow(toY- fromY, 2) + Math.pow(toX - fromX, 2));
 
     // Draw the arrowhead
     ctx.beginPath();
-    ctx.moveTo(toX, toY);
-    ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-    ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
-    ctx.lineTo(toX, toY);
-    ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-    ctx.stroke();
+    ctx.moveTo(fromX, fromY);
+    ctx.ellipse(fromX, fromY, dist)
+    // ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+    // ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
+    // ctx.lineTo(toX, toY);
+    // ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+    // ctx.stroke();
     ctx.beginPath(); // Reset path after drawing each arrow
 }
 
