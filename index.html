@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fourier Transform</title>
+    <title>Canvas Drawing</title>
     <style>
         body { text-align: center; margin-top: 50px; }
         canvas { border: 1px solid black; }
+        #consoleContainer { display: flex; justify-content: flex-start; }
+        #consoleOutput { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9; overflow-y: scroll; max-height: 200px; font-family: monospace; }
     </style>
 </head>
 <body>
     <h1>Draw something without lifting the mouse button.</h1>
-    <canvas id="drawingCanvas" width="800" height="600"></canvas>
-    <div id="consoleOutput"></div>
+    <div id="consoleContainer">
+        <canvas id="drawingCanvas" width="800" height="600"></canvas>
+        <div id="consoleOutput"></div>
+    </div>
     <script src="main.js"></script>
     <script src="coords.js"></script>
 </body>
