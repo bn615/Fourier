@@ -106,8 +106,13 @@ function spacedArray(dist) {
             
             const d1 = Complex.distance(n1, p1);
             const d2 = Complex.distance(n2, p1);
-
             
+            if(x1 > -1000){
+                x1 = x1
+            }
+            else{
+                logToConsole(x1);
+            }
             if (d1 > d2){
                 lastPoint = Complex.add(n2, lastPoint);
             }
@@ -217,9 +222,9 @@ async function vectorAnimation() {
       await sleep(15 * everyNPoints);
   }
 
-    for(i = 0; i < points.length; i++){
-        logToConsole(String(points[i].x)+ ", " + String(points[i].y));
-    }
+    // for(i = 0; i < points.length; i++){
+    //     logToConsole(String(points[i].x)+ ", " + String(points[i].y));
+    // }
     logToConsole("Animation finished");
 }
 
