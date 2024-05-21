@@ -123,6 +123,9 @@ function spacedArray(dist) {
             else{
                 lastPoint = Complex.add(n1, lastPoint);
             }
+            if(isNaN(lastPoint.x) || isNaN(lastPoint.y)){
+                continue;
+            }
             result.push(lastPoint);
         }            
     }
