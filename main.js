@@ -89,8 +89,8 @@ function spacedArray(dist) {
             const dr = Math.sqrt(dx * dx + dy * dy);
             const D = p.x * p1.y - p1.x * p.y;
 
-            if(sign(Math.pow(dist * dr, 2) - D * D) == -1){
-                lastPoint = points[i + 1];
+            if(sign(Math.pow(dist * dr, 2) - D * D) != 1){
+                lastPoint = points[i];
                 result.push(lastPoint);
                 continue;
             }
