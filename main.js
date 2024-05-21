@@ -233,7 +233,7 @@ function drawArrow(ctx, fromX, fromY, toX, toY) {
     // Draw the arrowhead
     ctx.beginPath();
     ctx.moveTo(fromX, fromY);
-    ctx.ellipse(fromX, fromY, dist)
+    ellipse(fromX, fromY, dist);
     // ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
     // ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
     // ctx.lineTo(toX, toY);
