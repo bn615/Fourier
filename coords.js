@@ -125,11 +125,3 @@ class Polar {
     // }
 }
 
-
-class complexFourierSeries {
-  constructor(frequency, cValues) {
-      this.terms = terms;
-  }
-
-
-}
