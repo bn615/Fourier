@@ -214,10 +214,12 @@ async function vectorAnimation() {
             drawArrow(ctx, previousX, previousY, currentX, currentY);
         }
 
-      await sleep(25 * everyNPoints);
+      await sleep(15 * everyNPoints);
   }
 
-    logToConsole(points);
+    for(i = 0; i < points.length; i++){
+        logToConsole(points[i]);
+    }
     logToConsole("Animation finished");
 }
 
