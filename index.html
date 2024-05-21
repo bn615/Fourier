@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Drawing</title>
+    <title>Fourier Transform</title>
     <style>
         body { text-align: center; margin-top: 50px; }
+        #canvasContainer { display: flex; justify-content: center; align-items: flex-start; }
         canvas { border: 1px solid black; }
-        #consoleContainer { display: flex; justify-content: flex-start; }
-        #consoleOutput { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9; overflow-y: scroll; max-height: 200px; font-family: monospace; }
+        #consoleOutput { margin-left: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9; overflow-y: scroll; max-height: 200px; font-family: monospace; }
+        .button { padding: 10px 20px; font-size: 16px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .button:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
     <h1>Draw something without lifting the mouse button.</h1>
-    <div id="consoleContainer">
+    <div id="canvasContainer">
         <canvas id="drawingCanvas" width="800" height="600"></canvas>
         <div id="consoleOutput"></div>
     </div>
+    <button class="button" id="printButton">Print Points</button>
+    <button class="button" id="clearButton">Clear Drawing</button>
+    <button class="button" id="vectorAnimationButton">Vector Animation</button>
     <script src="main.js"></script>
     <script src="coords.js"></script>
 </body>
