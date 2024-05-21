@@ -88,6 +88,11 @@ function spacedArray(dist) {
             const dy = p1.y - p.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
             const D = p.x * p1.y - p1.x * p.y;
+            if(sign(Math.pow(dist * dr, 2) - D * D) == -1){
+                lastPoint = points[i];
+                result.push(lastPoint);
+                continue;
+            }
 
             const x1 = (D * dy + sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
             const x2 = (D * dy - sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
