@@ -70,21 +70,21 @@ function sign(val){
 
 function spacedArray(dist) {
     let result = [];
-    result.push(points[0])
+    result.push(points[0]);
 
     let lastPoint = points[0];
-    for(let i = 1; i < points.length; i++) {
-        
+    for (let i = 1; i < points.length; i++) {
         while (Complex.distance(lastPoint, points[i]) >= dist) {
             let t = dist / Complex.distance(lastPoint, points[i]);
-            if(isNaN(t)){
+            if (isNaN(t) || !isFinite(t)) {
+                console.error(`Invalid value for t: ${t}, lastPoint: ${lastPoint}, currentPoint: ${points[i]}`);
                 t = 0.5;
             }
             lastPoint = Complex.lerp(lastPoint, points[i], t);
-
-            result.push(lastPoint)
+            result.push(lastPoint);
         }
-        if(i != points.length - 1) {
+
+        if (i != points.length - 1) {
             const p1 = Complex.subtract(points[i + 1], lastPoint);
             const p = Complex.subtract(points[i], lastPoint);
 
@@ -93,29 +93,36 @@ function spacedArray(dist) {
             const dr = Math.sqrt(dx * dx + dy * dy);
             const D = p.x * p1.y - p1.x * p.y;
 
-            const x1 = (D * dy + sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
-            const x2 = (D * dy - sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
-            
-            const y1 = (-1 * D * dx + Math.abs(dy)* Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
-            const y2 = (-1 * D * dx - Math.abs(dy)* Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
+            const discriminant = Math.pow(dist * dr, 2) - D * D;
+            if (discriminant < 0) {
+                console.error(`Invalid discriminant: ${discriminant}, dx: ${dx}, dy: ${dy}, dr: ${dr}, D: ${D}`);
+                continue;
+            }
+
+            const sqrtDiscriminant = Math.sqrt(discriminant);
+            const x1 = (D * dy + sign(dy) * dx * sqrtDiscriminant) / (dr * dr);
+            const x2 = (D * dy - sign(dy) * dx * sqrtDiscriminant) / (dr * dr);
+            const y1 = (-D * dx + Math.abs(dy) * sqrtDiscriminant) / (dr * dr);
+            const y2 = (-D * dx - Math.abs(dy) * sqrtDiscriminant) / (dr * dr);
 
             const n1 = new Complex(x1, y1);
             const n2 = new Complex(x2, y2);
-            
+
             const d1 = Complex.distance(n1, p1);
             const d2 = Complex.distance(n2, p1);
-            
-            
 
-            if (d1 > d2){
-                lastPoint = Complex.add(n2, lastPoint);
+            if (isNaN(d1) || isNaN(d2)) {
+                console.error(`Invalid distances: d1: ${d1}, d2: ${d2}, n1: ${n1}, n2: ${n2}, p1: ${p1}`);
+                continue;
             }
 
-            else{
+            if (d1 > d2) {
+                lastPoint = Complex.add(n2, lastPoint);
+            } else {
                 lastPoint = Complex.add(n1, lastPoint);
             }
             result.push(lastPoint);
-        }            
+        }
     }
     result.push(points[points.length - 1]);
     return result;
@@ -158,7 +165,7 @@ function drawFirstNPoints(n) {
 
 // Vector animation function
 async function vectorAnimation() {
-    logToConsole("Starting animation");
+    console.log("Starting animation");
 
     const everyNPoints = 1;
     // let transform = fft(everyNPointsArray(everyNPoints));
@@ -206,9 +213,9 @@ async function vectorAnimation() {
   }
 
     for(i = 0; i < points.length; i++){
-        logToConsole(String(points[i].x)+ ", " + String(points[i].y));
+        console.log(String(points[i].x)+ ", " + String(points[i].y));
     }
-    logToConsole("Animation finished");
+    console.log("Animation finished");
 }
 
 function drawArrow(ctx, fromX, fromY, toX, toY) {
@@ -234,11 +241,6 @@ function drawArrow(ctx, fromX, fromY, toX, toY) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const consoleOutput = document.getElementById('consoleOutput');
-function logToConsole(message) {
-    consoleOutput.innerHTML += message + '<br>';
 }
 
 // Select the buttons from the HTML
