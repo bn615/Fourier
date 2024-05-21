@@ -64,6 +64,52 @@ function everyNPointsArray(everyNPoints) {
     }
     return result;
 }
+function sign(val){
+    return val / Math.abs(val);
+}
+
+function spacedArray(dist) {
+    let result = [];
+    result.push(points[0])
+
+    let lastPoint = points[0];
+    for(let i = 1; i < points.length - 1; i++) {
+        
+        while (Complex.distance(lastPoint, points[i]) >= dist) {
+            let t = dist / Complex.distance(lastPoint, points[i]);
+            lastPoint = Complex.lerp(lastPoint, points[i], t);
+            result.push(lastPoint)
+        }
+        if(Complex.dist(points[i], lastPoint) > dist / 2) {
+            const dx = points[i + 1].x - points[i].x;
+            const dy = points[i + 1].y - points[i].y;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            const D = points[i].x * points[i + 1].y - points[i + 1].x * points[i].y;
+
+            const x1 = (D * dy + sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
+            const x2 = (D * dy - sign(dy) * dx * Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
+            
+            const y1 = (-1 * D * dx + Math.abs(dy)* Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
+            const y2 = (-1 * D * dx - Math.abs(dy)* Math.sqrt(Math.pow(dist * dr, 2) - D * D)) / (dr * dr);
+
+            const p1 = new Complex(x1, y1);
+            const p2 = new Complex(x2, y2);
+            
+            const d1 = Complex.distance(p1, points[i + 1]);
+            const d2 = Complex.distance(p2, points[i + 1]);
+            
+            if (d1 > d2){
+                lastPoint = d2;
+            }
+            else{
+                lastPoint = d1;
+            }
+            result.push(lastPoint);
+        }            
+    }
+    return result;
+}
+
 
 // FFT implementation
 function fft(inputArray) {
@@ -114,14 +160,15 @@ function drawFirstNPoints(n) {
 async function vectorAnimation() {
     console.log("Starting animation");
 
-  const everyNPoints = 1;
-  let transform = fft(everyNPointsArray(everyNPoints));
-  let N = transform.length;
+    // const everyNPoints = 1;
+    // let transform = fft(everyNPointsArray(everyNPoints));
+    let transform = fft(spacedArray(2));
+    let N = transform.length;
 
-  pointsCopy = [];
-  for (let i = 0; i < points.length; i++) {
-    pointsCopy.push(points[i]);
-  }
+    pointsCopy = [];
+    for (let i = 0; i < points.length; i++) {
+        pointsCopy.push(points[i]);
+    }
 
     let currentlyAt = new Complex(0, 0);
 
