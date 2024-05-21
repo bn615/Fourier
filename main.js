@@ -218,7 +218,7 @@ async function vectorAnimation() {
   }
 
     for(i = 0; i < points.length; i++){
-        logToConsole(points[i].x, points[i].y);
+        logToConsole(String(points[i].x)+ ", " + String(points[i].y));
     }
     logToConsole("Animation finished");
 }
