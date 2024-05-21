@@ -35,7 +35,7 @@ function clearCanvas() {
 }
 
 function printPoints() {
-    logToConsole(spacedArray(3));
+    logToConsole(String(points[i].x)+ ", " + String(points[i].y));
 }
 
 function draw(e) {
