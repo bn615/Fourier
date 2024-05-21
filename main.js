@@ -80,7 +80,7 @@ function spacedArray(dist) {
             lastPoint = Complex.lerp(lastPoint, points[i], t);
             result.push(lastPoint)
         }
-        if(i != points.length - 1) {
+        if(i != points.length - 1 && Complex.distance(lastPOint, points[i]) > dist / 2.5) {
             const p1 = Complex.subtract(points[i + 1], lastPoint);
             const p = Complex.subtract(points[i], lastPoint);
 
