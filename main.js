@@ -169,7 +169,7 @@ function drawFirstNPoints(n) {
 
 // Vector animation function
 async function vectorAnimation() {
-    console.log("Starting animation");
+    logToConsole("Starting animation");
 
     const everyNPoints = 1;
     // let transform = fft(everyNPointsArray(everyNPoints));
@@ -216,7 +216,7 @@ async function vectorAnimation() {
       await sleep(25 * everyNPoints);
   }
 
-    console.log("Animation finished");
+    logToConsole("Animation finished");
 }
 
 function drawArrow(ctx, fromX, fromY, toX, toY) {
@@ -244,10 +244,15 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+const consoleOutput = document.getElementById('consoleOutput');
+function logToConsole(message) {
+    consoleOutput.innerHTML += message + '<br>';
+}
+
 // Add a button to print points
 const printButton = document.createElement('button');
 printButton.innerText = 'Print Points';
-printButton.addEventListener('click', () => console.log(everyNPointsArray(1)));
+printButton.addEventListener('click', () => logToConsole(spacedArray(3)));
 document.body.appendChild(printButton);
 
 // Add a button to clear drawing
