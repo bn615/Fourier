@@ -168,7 +168,8 @@ async function vectorAnimation() {
 
     const everyNPoints = 1;
     let transform = fft(everyNPointsArray(everyNPoints));
-    // let transform = fft(spacedArray(2));
+    // let transform = fft(spacedArray(1)); 
+    // 1 is the distance between points, doesnt work rn for sum reason
     let N = transform.length;
 
     pointsCopy = [];
