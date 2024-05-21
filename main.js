@@ -188,9 +188,9 @@ async function vectorAnimation() {
 
         drawFirstNPoints(n + 1);
 
-        ctx.lineWidth = 1;
+        ctx.lineWidth = .75;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = 'red';
+        ctx.strokeStyle = '#add8e6';
         ctx.beginPath(); // Reset path at the beginning of each frame
 
         for (let k = 0; k < N; k++) {
@@ -233,8 +233,6 @@ function drawArrow(ctx, fromX, fromY, toX, toY) {
     // Draw the arrowhead
     ctx.beginPath();
     ctx.arc(fromX, fromY, radius, 0, 2 * Math.PI, false);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = '#003300';
     ctx.stroke();
     // ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
     // ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
