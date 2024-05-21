@@ -34,11 +34,6 @@ function clearCanvas() {
     originalImage = null; // Clear the saved image
 }
 
-function printPoints() {
-    points = spacedArray(3);
-    logToConsole(String(points[i].x)+ ", " + String(points[i].y));
-}
-
 function draw(e) {
     if (!drawing) return;
 
@@ -250,11 +245,9 @@ function logToConsole(message) {
 }
 
 // Select the buttons from the HTML
-const printButton = document.getElementById('printButton');
 const clearButton = document.getElementById('clearButton');
 const vectorAnimationButton = document.getElementById('vectorAnimationButton');
 
 // Add event listeners to the buttons
-printButton.addEventListener('click', printPoints);
 clearButton.addEventListener('click', clearCanvas);
 vectorAnimationButton.addEventListener('click', vectorAnimation);
