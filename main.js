@@ -217,6 +217,7 @@ async function vectorAnimation() {
       await sleep(25 * everyNPoints);
   }
 
+    logToConsole(points);
     logToConsole("Animation finished");
 }
 
