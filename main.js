@@ -250,20 +250,12 @@ function logToConsole(message) {
     consoleOutput.innerHTML += message + '<br>';
 }
 
-// Add a button to print points
-const printButton = document.createElement('button');
-printButton.innerText = 'Print Points';
+// Select the buttons from the HTML
+const printButton = document.getElementById('printButton');
+const clearButton = document.getElementById('clearButton');
+const vectorAnimationButton = document.getElementById('vectorAnimationButton');
+
+// Add event listeners to the buttons
 printButton.addEventListener('click', () => logToConsole(spacedArray(3)));
-document.body.appendChild(printButton);
-
-// Add a button to clear drawing
-const clearButton = document.createElement('button');
-clearButton.innerText = 'Clear Drawing';
 clearButton.addEventListener('click', clearCanvas);
-document.body.appendChild(clearButton);
-
-// Add a button to do vector animation
-const vectorAnimationButton = document.createElement('button');
-vectorAnimationButton.innerText = 'Vector Animation';
 vectorAnimationButton.addEventListener('click', vectorAnimation);
-document.body.appendChild(vectorAnimationButton);
