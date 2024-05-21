@@ -78,19 +78,16 @@ function spacedArray(dist) {
     result.push(points[0])
 
     let lastPoint = points[0];
-    for(let i = 1; i < points.length; i++) {
+    for(let i = 0; i < points.length - 1; i++) {
         
         while (Complex.distance(lastPoint, points[i]) >= dist) {
-            let t = dist / Complex.distance(lastPoint, points[i]);
-            lastPoint = Complex.lerp(lastPoint, points[i], t);
+            let t = dist / Complex.distance(lastPoint, points[i + 1]);
+            lastPoint = Complex.lerp(lastPoint, points[i + 1], t);
             if(isNaN(lastPoint.x) || isNaN(lastPoint.y)){
-                continue;c
+
+                continue;
             }
             result.push(lastPoint)
-        }
-        if(isNaN(lastPoint.x) || isNaN(lastPoint.y)){
-            lastPoint = points[i]
-            continue;
         }
         if(i != points.length - 1) {
             const p1 = Complex.subtract(points[i + 1], lastPoint);
