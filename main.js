@@ -228,12 +228,14 @@ function drawArrow(ctx, fromX, fromY, toX, toY) {
     ctx.lineTo(toX, toY);
     ctx.stroke();
     
-    let dist = Math.sqrt(Math.pow(toY- fromY, 2) + Math.pow(toX - fromX, 2));
+    let radius = Math.sqrt(Math.pow(toY- fromY, 2) + Math.pow(toX - fromX, 2));
 
     // Draw the arrowhead
     ctx.beginPath();
-    ctx.moveTo(fromX, fromY);
-    ellipse(fromX, fromY, dist);
+    context.arc(fromX, fromY, radius, 0, 2 * Math.PI, false);
+    context.lineWidth = 5;
+    context.strokeStyle = '#003300';
+    context.stroke();
     // ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
     // ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
     // ctx.lineTo(toX, toY);
