@@ -166,10 +166,9 @@ function drawFirstNPoints(n) {
 async function vectorAnimation() {
     console.log("Starting animation");
 
-    // const everyNPoints = 1;
+    const everyNPoints = 1;
     // let transform = fft(everyNPointsArray(everyNPoints));
-    points = spacedArray(2);
-    let transform = fft(points);
+    let transform = fft(spacedArray(2));
     let N = transform.length;
 
     pointsCopy = [];
