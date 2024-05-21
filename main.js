@@ -88,8 +88,9 @@ function spacedArray(dist) {
             const dy = p1.y - p.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
             const D = p.x * p1.y - p1.x * p.y;
+
             if(sign(Math.pow(dist * dr, 2) - D * D) == -1){
-                lastPoint = points[i];
+                lastPoint = points[i + 1];
                 result.push(lastPoint);
                 continue;
             }
@@ -108,9 +109,9 @@ function spacedArray(dist) {
 
             
             if (d1 > d2){
-
                 lastPoint = Complex.add(n2, lastPoint);
             }
+
             else{
                 lastPoint = Complex.add(n1, lastPoint);
             }
