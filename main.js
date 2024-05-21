@@ -232,10 +232,10 @@ function drawArrow(ctx, fromX, fromY, toX, toY) {
 
     // Draw the arrowhead
     ctx.beginPath();
-    context.arc(fromX, fromY, radius, 0, 2 * Math.PI, false);
-    context.lineWidth = 5;
-    context.strokeStyle = '#003300';
-    context.stroke();
+    ctx.arc(fromX, fromY, radius, 0, 2 * Math.PI, false);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#003300';
+    ctx.stroke();
     // ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
     // ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
     // ctx.lineTo(toX, toY);
